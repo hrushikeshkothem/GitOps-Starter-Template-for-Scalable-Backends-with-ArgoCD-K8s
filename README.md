@@ -38,21 +38,17 @@ GitOps is a paradigm for managing infrastructure and applications where Git is t
     └── dev/                         # Configuration for a specific Kubernetes cluster
         ├── application.yaml         # Cluster-level ArgoCD Application (points to argo-apps)
         ├── argo-apps/               # Directory for ArgoCD Application manifests
-        │   ├── monitoring/          # ArgoCD Applications for the 'monitoring' namespace (e.g., prometheus, loki)
+        │   ├── monitoring/          # ArgoCD Applications for the 'monitoring' namespace (e.g., prometheus)
         │   │   ├── namespace.yaml
-        │   │   ├── kube-prometheus-stack.yaml
-        │   │   └── loki.yaml
+        │   │   └── kube-prom-stack.yaml
         │   └── playground/          # ArgoCD Applications for the 'playground' namespace
         │       ├── namespace.yaml
         │       └── test-app.yaml
         └── apps/              # Kubernetes manifests and Helm charts organized by namespace
             ├── monitoring/          # Resources for the 'monitoring' namespace
-            │   ├── kube-prometheus-stack/
-            │   │   ├── chart/       # Helm chart for kube-prometheus-stack
-            │   │   └── values.yaml  # Custom values for kube-prometheus-stack
-            │   └── loki/
-            │       ├── chart/       # Helm chart for loki
-            │       └── values.yaml  # Custom values for loki
+            │   └── kube-prom-stack/
+            │       ├── chart/       # Helm chart for kube-prometheus-stack
+            │       └── values.yaml  # Custom values for kube-prometheus-stack
             └── playground/
                 └── test-app/
                     ├── Deployment.yaml
