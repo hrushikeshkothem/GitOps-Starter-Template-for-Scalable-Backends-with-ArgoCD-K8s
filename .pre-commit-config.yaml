@@ -1,0 +1,36 @@
+repos:
+-   repo: local
+    hooks:
+    -   id: lint-yaml
+        name: Lint YAML files using npm yaml-lint with config file
+        entry: >
+            bash -c '
+                if ! command -v npm &> /dev/null; then
+                echo "❌ npm is not installed. Please install Node.js and npm"
+                exit 1
+                fi
+                if [ ! -d "node_modules" ]; then
+                echo "❌ node_modules folder missing. Please run: npm install"
+                exit 1
+                fi
+                npm run validate-yaml
+            '
+        language: system
+
+-   repo: local
+    hooks:
+    -   id: validate-json-schema
+        name: Validate config.json against schema.config.json
+        entry: >
+            bash -c '
+                if ! command -v npm &> /dev/null; then
+                echo "❌ npm is not installed. Please install Node.js and npm"
+                exit 1
+                fi
+                if [ ! -d "node_modules" ]; then
+                echo "❌ node_modules folder missing. Please run: npm install"
+                exit 1
+                fi
+                npm run validate-config
+            '
+        language: system

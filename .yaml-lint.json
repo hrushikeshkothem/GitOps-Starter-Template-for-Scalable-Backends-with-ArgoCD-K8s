@@ -1,0 +1,15 @@
+{
+    "schema": "CORE_SCHEMA",
+    "extends": "default",
+    "rules": {
+      "line-length": "off",
+      "document-start": "off"
+    },
+    "ignore": [
+      "**/chart/**",
+      "**/charts/**",
+      "**/bootstrap/**",
+      ".pre-commit-config.yaml"
+    ]
+}
+  

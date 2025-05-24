@@ -1,0 +1,26 @@
+name: YAML Lint
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  yamllint:
+    name: Run yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js (for ajv-cli)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install YAML-LINT
+        run: npm install -g yaml-lint
+
+      - name: Validate yaml files
+        run: npx yaml-lint '**/*.yaml' '**/*.yml'

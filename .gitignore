@@ -1,0 +1,16 @@
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+.sublime-project
+.sublime-workspace
+.DS_Store
+*.tgz
+.env
+.env.*
+!.env.example
+node_modules
+package-lock.json

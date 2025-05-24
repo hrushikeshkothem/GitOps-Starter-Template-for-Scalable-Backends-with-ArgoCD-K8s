@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: projectName                                           # Modify Project name
+  namespace: argocd
+spec:
+  sourceRepos:
+    - "git@github.com:user/repo.git"                          # Modify repo url
+  sourceNamespaces: []
+  destinations:
+    - namespace: "*"
+      server: "https://kubernetes.default.svc"
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  roles:
+    - name: dev
+      description: "Access to all application"
+      policies:
+        - p, proj:hrushispace:dev, applications, *, hrushispace/*, allow
+        - p, proj:hrushispace:dev, applications, delete, hrushispace/root-application, deny
+        - p, proj:hrushispace:dev, applications, delete, hrushispace/dev-cluster, deny
+      groups:
+        - teamA-dev
+    - name: infra
+      description: "Access to all application and repositories"
+      policies:
+        - p, proj:hrushispace:infra, repositories, *, hrushispace/*, allow
+        - p, proj:hrushispace:infra, applications, *, hrushispace/*, allow
+        - p, proj:hrushispace:infra, applications, delete, hrushispace/root-application, deny
+      groups:
+        - teamA-infra

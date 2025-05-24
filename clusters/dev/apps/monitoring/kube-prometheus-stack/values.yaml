@@ -1,0 +1,42 @@
+global:
+  rbac:
+    create: true
+
+prometheus:
+  enabled: true
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        metadata:
+          name: prometheus-pvc
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+          storageClassName: nfs-default
+
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        metadata:
+          name: alertmanager-pvc
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: nfs-default
+
+grafana:
+  persistence:
+    enabled: true
+    storageClassName: nfs-default
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+    finalizers:
+      - kubernetes.io/pvc-protection

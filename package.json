@@ -1,0 +1,16 @@
+{
+  "name": "kuberentes",
+  "version": "1.0.0",
+  "description": "A gitOps repository",
+  "main": "index.js",
+  "scripts": {
+    "validate-config": "ajv validate -s bootstrap/schema.config.json -d bootstrap/config.json",
+    "validate-yaml": "npx yaml-lint '**/*.yaml' '**/*.yml'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ajv-cli": "^5.0.0",
+    "yaml-lint": "^1.7.0"
+  }
+}

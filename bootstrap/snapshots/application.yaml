@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-application
+  namespace: argocd
+spec:
+  project: projectName                                            # Modify project name
+  source:
+    repoURL: git@github.com:user/repo.git                         # Modify repo url
+    targetRevision: main                                          # Modify branch name
+    path: clusters
+    directory:
+      recurse: true
+      jsonnet: {}
+      exclude: '{**/apps/**,**/argo-apps/**}'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

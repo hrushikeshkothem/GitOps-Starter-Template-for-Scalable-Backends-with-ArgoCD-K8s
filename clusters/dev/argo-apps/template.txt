@@ -1,0 +1,49 @@
+
+# normal deployments
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: name
+  namespace: argocd
+  labels:
+    namespace: ns
+spec:
+  project: projectName
+  source:
+    repoURL: git@github.com:user/repo.git
+    targetRevision: main
+    path: clusters/dev/apps/ns/app                                      # -> change path 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ns                                                             # -> change namespace 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+# helm deployments
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: name
+  namespace: argocd
+  labels:
+    namespace: ns
+spec:
+  project: projectName
+  source:
+    repoURL: git@github.com:user/repo.git                  # -> helm repo url
+    targetRevision: main
+    path: clusters/dev/apps/ns/app/chart      # -> helm chart path
+    helm:
+      valueFiles:
+        - ../values.yaml                                                      # -> relative values path
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ns                                                             # -> namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

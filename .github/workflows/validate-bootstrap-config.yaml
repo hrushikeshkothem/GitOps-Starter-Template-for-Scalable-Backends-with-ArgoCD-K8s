@@ -1,0 +1,39 @@
+name: Validate Bootstrap Config
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'bootstrap/config.json'
+      - 'bootstrap/schema.config.json'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'bootstrap/config.json'
+      - 'bootstrap/schema.config.json'
+
+jobs:
+  validate-config:
+    name: Validate bootstrap/config.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js (for ajv-cli)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install AJV CLI
+        run: npm install -g ajv-cli
+
+      - name: Validate config.json against schema
+        run: |
+          ajv validate \
+            -s bootstrap/schema.config.json \
+            -d bootstrap/config.json \
+            --errors=text \
+            --strict=true

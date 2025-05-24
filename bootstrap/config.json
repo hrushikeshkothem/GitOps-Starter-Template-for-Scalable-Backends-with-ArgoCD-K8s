@@ -1,0 +1,43 @@
+{
+    "host": "argocd.hrushispace.com",
+    "default_password": "password1234",
+    "sshPath": "/home/username/.ssh/argo_key",
+    "roles":[
+        {
+            "name": "dev",
+            "description": "Access to all application",
+            "policies": [
+                "p, proj:hrushispace:dev, applications, *, hrushispace/*, allow",
+                "p, proj:hrushispace:dev, applications, delete, hrushispace/root-application, deny",
+                "p, proj:hrushispace:dev, applications, delete, hrushispace/dev-cluster, deny"
+            ],
+            "groups": [
+                "teamA-dev"
+            ]
+        },
+        {
+            "name": "infra",
+            "description": "Access to all application and repositories",
+            "policies": [
+                "p, proj:hrushispace:infra, repositories, *, hrushispace/*, allow",
+                "p, proj:hrushispace:infra, applications, *, hrushispace/*, allow",
+                "p, proj:hrushispace:infra, applications, delete, hrushispace/root-application, deny"
+            ],
+            "groups": [
+                "teamA-infra"
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "X",
+            "group": "teamA-dev",
+            "access": "login"
+        },
+        {
+            "name": "Y",
+            "group": "teamA-infra",
+            "access": "login"
+        }
+    ]
+}
